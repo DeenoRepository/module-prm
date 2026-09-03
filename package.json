@@ -1,0 +1,17 @@
+﻿{
+  "name": "@platform/module-prm",
+  "version": "1.0.0",
+  "description": "Procurement and Request Management (PRM) module with approval workflow",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@platform/contracts": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

@@ -1,0 +1,12 @@
+﻿{
+  "$schema": "https://ems-platform.local/schemas/module-manifest.v1.json",
+  "id": "module-prm",
+  "name": "Procurement & Requests",
+  "version": "1.0.0",
+  "database": { "schema": "prm" },
+  "permissions": ["prm:request:read", "prm:request:write", "prm:order:approve"],
+  "events": {
+    "publishes": ["prm.demand.created", "prm.order.approved", "prm.order.received"],
+    "subscribes": ["wms.stock.depleted"]
+  }
+}
