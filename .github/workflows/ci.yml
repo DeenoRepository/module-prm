@@ -16,16 +16,12 @@ jobs:
           node-version: 20
           registry-url: 'https://npm.pkg.github.com'
           scope: '@deenorepository'
-      - name: Verify Cleanliness of AI Artifacts
+      - name: Verify Absence of AI Artifacts
         run: |
           if find . -type d -name ".agents" -o -name "AGENTS.md" -o -name "CLAUDE.md" | grep -q .; then
             echo "Error: AI artifacts are strictly prohibited in product repositories."
             exit 1
           fi
-          echo "AI artifacts check passed."
-      - name: Install dependencies
-        run: npm install || echo "Dependency resolution check"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "Cleanliness check passed."
       - name: Run TDD unit tests
-        run: npm test || echo "Test execution completed"
+        run: npx vitest run
