@@ -8,7 +8,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@platform/contracts": "^1.0.0"
+    "@deenorepository/contracts": "^1.0.0"
   },
   "devDependencies": {
     "typescript": "^5.5.4",
