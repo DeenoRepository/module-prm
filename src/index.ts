@@ -1,3 +1,4 @@
+export * from './domain/procurement-models.js';
 export * from './domain/procurement-service.js';
 export * from './domain/purchase-order-aggregate.js';
 
@@ -9,7 +10,7 @@ export const PrmModule = {
       id: 'prm-menu',
       title: 'Procurement & Requests',
       path: '/prm',
-      permission: 'prm:request:read'
+      permission: 'prm:order:read'
     });
   },
   async onStart() {},
