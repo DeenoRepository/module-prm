@@ -1,4 +1,4 @@
-﻿{
+{
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
@@ -9,5 +9,12 @@
     "skipLibCheck": true,
     "outDir": "./dist"
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts"
+  ]
 }

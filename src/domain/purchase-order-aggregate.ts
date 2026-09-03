@@ -19,9 +19,12 @@ export interface PrmOutboxRecord {
 }
 
 export class PurchaseOrderAggregate {
+  private _props: PurchaseOrderProps;
   private _outbox: PrmOutboxRecord[] = [];
 
-  constructor(private props: PurchaseOrderProps) {}
+  constructor(props: PurchaseOrderProps) {
+    this._props = { ...props };
+  }
 
   static create(props: Omit<PurchaseOrderProps, 'status'>): PurchaseOrderAggregate {
     const aggregate = new PurchaseOrderAggregate({
@@ -39,7 +42,7 @@ export class PurchaseOrderAggregate {
   }
 
   get props(): Readonly<PurchaseOrderProps> {
-    return Object.freeze({ ...this.props });
+    return Object.freeze({ ...this._props });
   }
 
   get outboxEvents(): readonly PrmOutboxRecord[] {
@@ -47,34 +50,34 @@ export class PurchaseOrderAggregate {
   }
 
   submit(): void {
-    if (this.props.status !== 'DRAFT') {
+    if (this._props.status !== 'DRAFT') {
       throw new Error('Only DRAFT orders can be submitted');
     }
-    this.props.status = 'SUBMITTED';
+    this._props.status = 'SUBMITTED';
   }
 
   approve(approver: string): void {
-    if (this.props.status !== 'SUBMITTED') {
+    if (this._props.status !== 'SUBMITTED') {
       throw new Error('Only SUBMITTED orders can be approved');
     }
-    this.props.status = 'APPROVED';
-    this.props.approvedBy = approver;
+    this._props.status = 'APPROVED';
+    this._props.approvedBy = approver;
 
     this.recordOutbox('prm.order.approved', {
-      orderId: this.props.id,
-      totalAmount: this.props.totalAmount,
+      orderId: this._props.id,
+      totalAmount: this._props.totalAmount,
       approvedBy: approver
     });
   }
 
   markReceived(): void {
-    if (this.props.status !== 'APPROVED') {
+    if (this._props.status !== 'APPROVED') {
       throw new Error('Only APPROVED orders can be fulfilled/received');
     }
-    this.props.status = 'FULFILLED';
+    this._props.status = 'FULFILLED';
     this.recordOutbox('prm.order.received', {
-      orderId: this.props.id,
-      vendor: this.props.vendor
+      orderId: this._props.id,
+      vendor: this._props.vendor
     });
   }
 
@@ -82,7 +85,7 @@ export class PurchaseOrderAggregate {
     this._outbox.push({
       id: crypto.randomUUID(),
       aggregateType: 'PurchaseOrder',
-      aggregateId: this.props.id,
+      aggregateId: this._props.id,
       eventType,
       payload,
       createdAt: new Date().toISOString(),
