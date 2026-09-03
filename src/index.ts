@@ -1,4 +1,5 @@
-﻿export * from './domain/procurement-service.js';
+export * from './domain/procurement-service.js';
+export * from './domain/purchase-order-aggregate.js';
 
 export const PrmModule = {
   id: 'module-prm',
@@ -6,7 +7,7 @@ export const PrmModule = {
   async onInit(ctx: any) {
     ctx.registerNavigation({
       id: 'prm-menu',
-      title: 'Р—Р°РєСѓРїРєРё Рё СЃРЅР°Р±Р¶РµРЅРёРµ',
+      title: 'Procurement & Requests',
       path: '/prm',
       permission: 'prm:request:read'
     });
